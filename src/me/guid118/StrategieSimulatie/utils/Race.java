@@ -159,29 +159,29 @@ public class Race {
         ArrayList<int[]> result = new ArrayList<>();
 
         for (int boxlap0 = getStableDegLap(tires[0]);
-             boxlap0 <= Math.min(getFailLap(tires[0]), racelaps - getStableDegLap(tires[1]));
+             boxlap0 < Math.min(getFailLap(tires[0]), racelaps - getStableDegLap(tires[1]));
              boxlap0++) {
 
-            if (tires.length == 2 && boxlap0 >= racelaps - getFailLap(tires[1])) {
+            if (tires.length == 2 && boxlap0 > racelaps - getFailLap(tires[1])) {
                 int[] boxlaps = new int[1];
                 boxlaps[0] = boxlap0;
                 result.add(boxlaps);
             } else if (tires.length > 2){
                 for (int boxlap1 = getStableDegLap(tires[1]) + boxlap0;
-                     boxlap1 <= Math.min(getFailLap(tires[1]) + boxlap0, racelaps - getStableDegLap(tires[1]));
+                     boxlap1 < Math.min(getFailLap(tires[1]) + boxlap0, racelaps - getStableDegLap(tires[1]));
                      boxlap1++) {
 
-                    if (tires.length == 3 && boxlap1 >= racelaps - getFailLap(tires[2])) {
+                    if (tires.length == 3 && boxlap1 > racelaps - getFailLap(tires[2])) {
                         int[] boxlaps = new int[2];
                         boxlaps[0] = boxlap0;
                         boxlaps[1] = boxlap1;
                         result.add(boxlaps);
                     } else if (tires.length > 3){
                         for (int boxlap2 = getStableDegLap(tires[2]) + boxlap1;
-                             boxlap2 <= Math.min(getFailLap(tires[2]) + boxlap1, racelaps - getStableDegLap(tires[2]));
+                             boxlap2 < Math.min(getFailLap(tires[2]) + boxlap1, racelaps - getStableDegLap(tires[2]));
                              boxlap2++) {
 
-                            if (boxlap2 >= racelaps - getFailLap(tires[3])) {
+                            if (boxlap2 > racelaps - getFailLap(tires[3])) {
                                 int[] boxlaps = new int[3];
                                 boxlaps[0] = boxlap0;
                                 boxlaps[1] = boxlap1;
