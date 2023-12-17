@@ -24,10 +24,6 @@ public class ThreadedSim implements Runnable {
         //run every stint
         //return the result
         double time = 0;
-        if (strategy == null) {
-            remthread(threadnumber);
-            return;
-        }
         for (; strategy.getStintNr() <= strategy.stints; strategy.addStint()) {
             time = time + LapTime.calculate(strategy);
         }

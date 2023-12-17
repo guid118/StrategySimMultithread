@@ -103,7 +103,7 @@ public class Race {
     
     public double getMaxRaceTime() { return this.maxRaceTime;}
 
-    public boolean hasNextStrategy() {
+    public synchronized boolean hasNextStrategy() {
         return currentstrat < strategies.size() - 1;
     }
 
@@ -198,7 +198,7 @@ public class Race {
     }
 
 
-    public Strategy getNextStrategy() {
+    public synchronized Strategy getNextStrategy() {
             Strategy strat = strategies.get(currentstrat);
             currentstrat++;
             return strat;
