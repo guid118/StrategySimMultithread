@@ -12,23 +12,24 @@ public class ThreadedSim implements Runnable {
     private Thread t;
     private final int threadnumber;
     private final Race race;
-    private final Strategy strategy;
+    private Strategy strategy;
 
-    ThreadedSim(int threadnumber, Strategy strategy, Race race) {
+    ThreadedSim(int threadnumber, Race race) {
         this.threadnumber = threadnumber;
-        this.strategy = strategy;
         this.race = race;
     }
 
     public void run() {
         //run every stint
         //return the result
-        double time = 0;
-        for (; strategy.getStintNr() <= strategy.stints; strategy.addStint()) {
-            time = time + LapTime.calculate(strategy);
+        while ((this.strategy = race.getNextStrategy()) != null) {
+            double time = 0;
+            for (; strategy.getStintNr() <= strategy.stints; strategy.addStint()) {
+                time = time + LapTime.calculate(strategy);
+            }
+            time += race.getPitstopTime() * strategy.boxlap.length;
+            addResult(new Result(strategy, time, Risk(strategy)));
         }
-        time += race.getPitstopTime() * strategy.boxlap.length;
-        results.add(new Result(strategy, time, Risk(strategy)));
         remthread(threadnumber);
     }
 

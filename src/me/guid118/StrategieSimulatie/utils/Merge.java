@@ -1,14 +1,13 @@
 package me.guid118.StrategieSimulatie.utils;
 
 // Java program for Merge Sort
-import java.io.*;
 
 public class Merge {
 
     // Merges two subarrays of arr[].
     // First subarray is arr[l..m]
     // Second subarray is arr[m+1..r]
-    public void merge(Result[] arr, int l, int m, int r)
+    public static void merge(Result[] arr, int l, int m, int r)
     {
         // Find sizes of two subarrays to be merged
         int n1 = m - l + 1;
@@ -52,7 +51,7 @@ public class Merge {
 
     // Main function that sorts arr[l..r] using
     // merge()
-    public void sort(Result[] arr, int l, int r)
+    public static void sort(Result[] arr, int l, int r)
     {
         if (l < r) {
 

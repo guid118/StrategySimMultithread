@@ -199,9 +199,12 @@ public class Race {
 
 
     public synchronized Strategy getNextStrategy() {
+        if (this.hasNextStrategy()) {
             Strategy strat = strategies.get(currentstrat);
             currentstrat++;
             return strat;
+        }
+        else return null;
     }
 
     public int getStableDegLap(int tiretype) {
