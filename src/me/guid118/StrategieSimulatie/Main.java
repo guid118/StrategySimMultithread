@@ -17,7 +17,7 @@ import static me.guid118.StrategieSimulatie.Files.Output.*;
 
 public class Main {
     private static final int maxthreads = Runtime.getRuntime().availableProcessors() / 4 * 3;
-    //private static int maxthreads = 0;
+    //private static final int maxthreads = 100;
     private static final ThreadedSim[] threads = new ThreadedSim[maxthreads + 1];
     public static OrderedProperties prop = new OrderedProperties();
     public static Race race;

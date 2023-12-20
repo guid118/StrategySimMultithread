@@ -2,7 +2,9 @@ package me.guid118.StrategieSimulatie;
 
 
 
+import me.guid118.StrategieSimulatie.utils.Stint;
 import me.guid118.StrategieSimulatie.utils.Strategy;
+import me.guid118.StrategieSimulatie.utils.TireType;
 
 import static me.guid118.StrategieSimulatie.Main.race;
 
@@ -12,23 +14,22 @@ public class LapTime {
 
     /**
      * Calculates the total laptime for a specific stint.
-     * @param strategy the strategy for which the calculation should be performed
+     * @param stint the stint for which the calculation should be performed
      * @return the laptime calculated
      */
-    public static double calculate(Strategy strategy) {
-        int laps = strategy.getCurrentStint();
-        return (race.getBaseLapTime(strategy.getCurrentTire()) * laps + race.AvgFuelTime*laps + TireWear(strategy));
+    public static double calculate(Stint stint) {
+        int laps = stint.getLaps();
+        return (race.getBaseLapTime(stint.getTire()) * laps + race.AvgFuelTime*laps + TireWear(stint));
     }
 
     /**
      * Calculates the fuelwear that is caused by fuel in the tank.
-     * @param strat strategy for which the calculation should be performed
-     * @param tirelap lap for which the calculation should be performed
+     * @param stint stint for which the calculation should be performed
      * @return fuel wear for a specific lap.
      */
-    private static double getFuelwear(Strategy strat, int tirelap) {
+    private static double getFuelwear(Stint stint) {
         double fuelwear;
-        int lap = strat.getlastBoxlap() + tirelap;
+        int lap = stint.getStartLap() + stint.getLaps();
         fuelwear = 0.95 + (1 - (double) lap / race.racelaps) / 10;
         return fuelwear;
     }
@@ -36,15 +37,15 @@ public class LapTime {
 
     /**
      * Calculates the tirewear for a specific stint.
-     * @param strat strategy for which the calculation should be performed
+     * @param stint stint for which the calculation should be performed
      * @return tirewear time for a specific stint. this does not include base laptime.
      */
-    private static double TireWear(Strategy strat){
+    private static double TireWear(Stint stint){
         //TODO use fuelwear again.
         //new newest version: https://www.desmos.com/calculator/zm6ma6utrb
         double tirewear;
-        int tirelap = strat.getlastBoxlap();
-        int tiretype = strat.getCurrentTire();
+        int tirelap = stint.getStartLap();
+        TireType tiretype = stint.getTire();
         double deg = race.getDegradation(tiretype);
         if (tirelap <= race.getFastDegLap(tiretype)) {
             //(((tirelap + stabledeglap)/7)^-2.5 * deg + tirelap * deg

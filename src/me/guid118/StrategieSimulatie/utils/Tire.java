@@ -4,16 +4,22 @@ package me.guid118.StrategieSimulatie.utils;
 public class Tire {
 
 
+
+
+
+
+
+
     /**
      * @param tirenumber 3-5
      * @return the name of that tire
      */
-    public static String getString(int tirenumber) {
-        if (tirenumber == 5) {
+    public static String toString(TireType tirenumber) {
+        if (tirenumber == TireType.SOFT) {
             return "Soft";
-        } else if (tirenumber == 4) {
+        } else if (tirenumber == TireType.MEDIUM) {
             return "Medium";
-        } else if (tirenumber == 3) {
+        } else if (tirenumber == TireType.HARD) {
             return "Hard";
         } else {
             return String.valueOf(tirenumber);

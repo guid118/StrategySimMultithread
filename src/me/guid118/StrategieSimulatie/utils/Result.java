@@ -8,10 +8,10 @@ public record Result(Strategy strat, double time, String RiskFactor) {
         return time;
     }
 
-    private String stringTires(int[] tires) {
+    private String stringTires(TireType[] tires) {
         StringBuilder Stringtires = new StringBuilder();
         for (int i = 0; i < tires.length; i++) {
-            Stringtires.append(Tire.getString(tires[i]));
+            Stringtires.append(Tire.toString(tires[i]));
             if (!(i == tires.length - 1)) {
                 Stringtires.append("-");
             }
@@ -20,16 +20,13 @@ public record Result(Strategy strat, double time, String RiskFactor) {
     }
 
     public String toString() {
-        int[] tires = strat.tires;
-        int[] boxlaps = strat.boxlap;
+        TireType[] tires = strat.getTires();
+        int[] boxlaps = strat.getBoxlaps();
         StringBuilder savedstring = new StringBuilder();
         savedstring.append(stringTires(tires));
         savedstring.append("\t");
-        for (int j = 0; j < race.getMaxpitstops(); j++) {
-            if (j < boxlaps.length) {
-                savedstring.append(boxlaps[j]);
-            }
-            savedstring.append("\t");
+        for (int boxlap : boxlaps) {
+            savedstring.append(boxlap).append("\t");
         }
         savedstring.append(round(time, 2)).append("\t").append(RiskFactor);
         return savedstring.toString();

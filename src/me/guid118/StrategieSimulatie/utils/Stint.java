@@ -4,12 +4,13 @@ public class Stint {
 
     private final int laps;
     private final TireType tire;
+    private final int startLap;
 
-    private boolean isCalculated;
 
-    public Stint(int laps, TireType tiretype) {
+    public Stint(int laps, TireType tiretype, int startLap) {
         this.laps = laps;
         this.tire = tiretype;
+        this.startLap = startLap;
     }
 
     public int getLaps() {
@@ -20,7 +21,7 @@ public class Stint {
         return tire;
     }
 
-    public boolean isCalculated() {
-        return isCalculated;
+    public int getStartLap() {
+        return startLap;
     }
 }
