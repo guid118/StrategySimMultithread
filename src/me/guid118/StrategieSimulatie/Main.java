@@ -1,19 +1,17 @@
 package me.guid118.StrategieSimulatie;
 
 
-import java.util.Comparator;
-import me.guid118.StrategieSimulatie.Files.Config;
-import me.guid118.StrategieSimulatie.Files.Output;
+import java.util.*;
+
+import me.guid118.StrategieSimulatie.files.Config;
+import me.guid118.StrategieSimulatie.files.Output;
 import me.guid118.StrategieSimulatie.utils.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 
-import static me.guid118.StrategieSimulatie.Files.Output.*;
+import static me.guid118.StrategieSimulatie.files.Output.*;
 
 public class Main {
     private static final int maxthreads = Runtime.getRuntime().availableProcessors() / 4 * 3;
@@ -36,28 +34,34 @@ public class Main {
         generateStrategies();
         createthreads();
         double endTime = System.currentTimeMillis();
+        while (Arrays.stream(threads).distinct().count() > 1) {
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         saveResults();
         Write();
         System.out.println(
                 "total execution took: " + (round((endTime - startTime) / 1000, 2) + " seconds"));
     }
 
+
     public static double round(double value, int places) {
-        if (places < 0) { throw new IllegalArgumentException(); }
+        if (places < 0) {
+            throw new IllegalArgumentException();
+        }
         BigDecimal bd = BigDecimal.valueOf(value);
         bd = bd.setScale(places, RoundingMode.HALF_UP);
         return bd.doubleValue();
     }
 
 
-
     private static void createthreads() {
-
-        while (race.hasNextStrategy()) {
-            for (int threadnumber = 0; threadnumber < maxthreads; threadnumber++) {
-                threads[threadnumber] = new ThreadedSim(threadnumber, race);
-                threads[threadnumber].start();
-            }
+        for (int threadnumber = 0; threadnumber < maxthreads; threadnumber++) {
+            threads[threadnumber] = new ThreadedSim(threadnumber, race);
+            threads[threadnumber].start();
         }
 
     }

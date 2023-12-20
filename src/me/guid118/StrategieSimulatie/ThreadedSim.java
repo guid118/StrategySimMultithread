@@ -38,4 +38,8 @@ public class ThreadedSim implements Runnable {
         }
     }
 
+    public Thread getThread() {
+        return t;
+    }
+
 }

@@ -16,7 +16,7 @@ public class RiskFactor {
     public static String Risk(Strategy strat) {
         List<Double> riskratio = new ArrayList<>();
         for (Stint stint : strat.stints) {
-            riskratio.add((double) stint.getLaps() / race.getFailLap(stint.getTire()));
+            riskratio.add((double) stint.getLaps() / stint.getTire().getFailLap());
         }
         Collections.sort(riskratio);
         if (riskratio.get(riskratio.size() - 1) <= 0.7) return "Low";

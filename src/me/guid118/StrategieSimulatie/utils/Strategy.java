@@ -30,7 +30,7 @@ public class Strategy {
     /**
      * @return the type of tire in use in the current stint.
      */
-    public TireType getCurrentTire() {
+    public Tire getCurrentTire() {
         return stints[currentStint].getTire();
     }
 
@@ -70,12 +70,12 @@ public class Strategy {
      * get the tire of the stint given.
      * @return tiretype of the stint given.
      */
-    public TireType getTire(int stint) {
+    public Tire getTire(int stint) {
         return stints[stint].getTire();
     }
 
-    public TireType[] getTires() {
-        TireType[] tires = new TireType[stints.length];
+    public Tire[] getTires() {
+        Tire[] tires = new Tire[stints.length];
         for (int i = 0; i < stints.length; i++) {
             tires[i] = stints[i].getTire();
         }
@@ -83,7 +83,7 @@ public class Strategy {
     }
 
     public int[] getBoxlaps() {
-        int[] boxlaps = new int[stints.length];
+        int[] boxlaps = new int[stints.length-1];
         for (int i = 0; i < stints.length - 1; i++) {
             boxlaps[i] = stints[i].getStartLap() + stints[i].getLaps();
         }

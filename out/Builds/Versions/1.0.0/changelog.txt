@@ -1,4 +1,0 @@
-derde pitstop mogelijkheid toegevoegd
-bij klapband wordt de strategie niet geoutput
-bij racetijd van meer dan 6000 seconden wordt de strategie niet geoutput
-deze maatregelen vanwege te grote bestanden (200+ Mb)

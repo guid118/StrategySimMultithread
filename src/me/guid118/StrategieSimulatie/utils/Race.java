@@ -6,18 +6,7 @@ public class Race {
 
     public final String name;
     public final int racelaps;
-
-
-    public int maxpitstops;
-    public final int SoftFailLap;
-    public final int MediumFailLap;
-    public final int HardFailLap;
-    public final double SoftBaseLapTime;
-    public final double MediumBaseLapTime;
-    public final double HardBaseLapTime;
-    public final double SoftDegradation;
-    public final double MediumDegradation;
-    public final double HardDegradation;
+    private Tire[] tires;
     public final double PitstopTime;
     public final int minPitstops;
     public final int maxPitstops;
@@ -25,91 +14,19 @@ public class Race {
     public final double AvgFuelTime = 1.5;
     public int currentstrat = 0;
     public final List<Strategy> strategies = new ArrayList<>();
-    private final int SoftStableDegLap;
-    private final int MediumStableDegLap;
-    private final int HardStableDegLap;
-    private final int SoftFastDegLap;
-    private final int MediumFastDegLap;
-    private final int HardFastDegLap;
 
     public final int maxResults;
 
 
-    public Race(String name, double SoftBaseLapTime, int SoftFailLap, double SoftDegradation, int SoftStableDeglap, int SoftFastDegLap, double MediumBaseLapTime, int MediumFailLap, double MediumDegradation, int MediumStableDeglap, int MediumFastDegLap, double HardBaseLapTime, int HardFailLap, double HardDegradation, int HardStableDegLap, int HardFastDegLap, double PitstopTime, int minPitstops, int maxPitstops, double maxRaceTime, int Laps, int maxResults) {
+
+    public Race(String name, double PitstopTime, int minPitstops, int maxPitstops, double maxRaceTime, int Laps, int maxResults) {
         this.name = name;
-        this.SoftBaseLapTime = SoftBaseLapTime;
-        this.SoftFailLap = SoftFailLap;
-        this.SoftDegradation = SoftDegradation;
-        this.SoftStableDegLap = SoftStableDeglap;
-        this.SoftFastDegLap = SoftFastDegLap;
-
-        this.MediumBaseLapTime = MediumBaseLapTime;
-        this.MediumFailLap = MediumFailLap;
-        this.MediumDegradation = MediumDegradation;
-        this.MediumStableDegLap = MediumStableDeglap;
-        this.MediumFastDegLap = MediumFastDegLap;
-
-        this.HardBaseLapTime = HardBaseLapTime;
-        this.HardFailLap = HardFailLap;
-        this.HardDegradation = HardDegradation;
-        this.HardStableDegLap = HardStableDegLap;
-        this.HardFastDegLap = HardFastDegLap;
-
         this.PitstopTime = PitstopTime;
         this.minPitstops = minPitstops;
         this.maxPitstops = maxPitstops;
         this.maxRaceTime = maxRaceTime;
         this.racelaps = Laps;
         this.maxResults = maxResults;
-
-    }
-
-    public int getFailLap(TireType tiretype) {
-        if (tiretype == TireType.SOFT) {
-            return SoftFailLap;
-        } else if (tiretype == TireType.MEDIUM) {
-            return MediumFailLap;
-        } else if (tiretype == TireType.HARD) {
-            return HardFailLap;
-        } else {
-            return -1;
-        }
-    }
-
-    public double getBaseLapTime(TireType tiretype) {
-        if (tiretype == TireType.SOFT) {
-            return SoftBaseLapTime;
-        } else if (tiretype == TireType.MEDIUM) {
-            return MediumBaseLapTime;
-        } else if (tiretype == TireType.HARD) {
-            return HardBaseLapTime;
-        } else {
-            return -1;
-        }
-    }
-
-    public double getDegradation(TireType tiretype) {
-        if (tiretype == TireType.SOFT) {
-            return SoftDegradation;
-        } else if (tiretype == TireType.MEDIUM) {
-            return MediumDegradation;
-        } else if (tiretype == TireType.HARD) {
-            return HardDegradation;
-        } else {
-            return -1;
-        }
-    }
-
-    public double getPitstopTime() {
-        return this.PitstopTime;
-    }
-
-    public int getMaxpitstops() {
-        return this.maxPitstops;
-    }
-
-    public double getMaxRaceTime() {
-        return this.maxRaceTime;
     }
 
     public synchronized boolean hasNextStrategy() {
@@ -117,15 +34,16 @@ public class Race {
     }
 
     public void generateStrategies() {
+        this.tires = new Tire[]{new Tire(TireType.SOFT), new Tire(TireType.MEDIUM), new Tire(TireType.HARD)};
         for (int stops = minPitstops; stops <= maxPitstops; stops++) {
-            for (TireType tire0 : TireType.values()) {
-                for (TireType tire1 : TireType.values()) {
+            for (Tire tire0 : tires) {
+                for (Tire tire1 : tires) {
                     if (stops >= 2) {
-                        for (TireType tire2 : TireType.values()) {
+                        for (Tire tire2 : tires) {
                             if (stops == 3) {
-                                for (TireType tire3 : TireType.values()) {
-                                    if (tire0 != tire1 && tire1 != tire2 && tire2 != tire3) {
-                                        TireType[] tires = {tire0, tire1, tire2, tire3};
+                                for (Tire tire3 : tires) {
+                                    if (!tire0.equals(tire1) && !tire1.equals(tire2) && !tire2.equals(tire3)) {
+                                        Tire[] tires = {tire0, tire1, tire2, tire3};
                                         for (int[] boxlaps : chooseboxlaps(tires)) {
                                             Stint[] stints = new Stint[4];
                                             stints[0] = new Stint(boxlaps[0], tire0, 0);
@@ -140,8 +58,8 @@ public class Race {
                                     }
                                 }
                             } else {
-                                if (tire0 != tire1 && tire1 != tire2) {
-                                    TireType[] tires = {tire0, tire1, tire2};
+                                if (!tire0.equals(tire1) && !tire1.equals(tire2)) {
+                                    Tire[] tires = {tire0, tire1, tire2};
                                     for (int[] boxlaps : chooseboxlaps(tires)) {
                                         Stint[] stints = new Stint[3];
                                         stints[0] = new Stint(boxlaps[0], tire0, 0);
@@ -154,8 +72,8 @@ public class Race {
                             }
                         }
                     } else {
-                        if (tire0 != tire1) {
-                            TireType[] tires = {tire0, tire1};
+                        if (!tire0.equals(tire1)) {
+                            Tire[] tires = {tire0, tire1};
                             for (int[] boxlaps : chooseboxlaps(tires)) {
                                 Stint[] stints = new Stint[2];
                                 stints[0] = new Stint(boxlaps[0], tire0, 0);
@@ -170,33 +88,33 @@ public class Race {
         System.out.println("Total strategies generated: " + strategies.size());
     }
 
-    private ArrayList<int[]> chooseboxlaps(TireType[] tires) {
+    private ArrayList<int[]> chooseboxlaps(Tire[] tires) {
         ArrayList<int[]> result = new ArrayList<>();
 
-        for (int boxlap0 = getStableDegLap(tires[0]); boxlap0 < Math.min(getFailLap(tires[0]),
-                racelaps - getStableDegLap(
-                        tires[1])); boxlap0++) {
+        for (int boxlap0 = tires[0].getStableDegLap(); boxlap0 < Math.min(tires[0].getFailLap(),
+                racelaps -
+                        tires[1].getStableDegLap()); boxlap0++) {
 
-            if (tires.length == 2 && boxlap0 > racelaps - getFailLap(tires[1])) {
+            if (tires.length == 2 && boxlap0 > racelaps - tires[1].getFailLap()) {
                 int[] boxlaps = new int[1];
                 boxlaps[0] = boxlap0;
                 result.add(boxlaps);
             } else if (tires.length > 2) {
-                for (int boxlap1 = getStableDegLap(tires[1]) + boxlap0; boxlap1 < Math.min(
-                        getFailLap(tires[1]) + boxlap0,
-                        racelaps - getStableDegLap(tires[1])); boxlap1++) {
+                for (int boxlap1 = tires[1].getStableDegLap() + boxlap0; boxlap1 < Math.min(
+                        tires[1].getFailLap() + boxlap0,
+                        racelaps - tires[1].getStableDegLap()); boxlap1++) {
 
-                    if (tires.length == 3 && boxlap1 > racelaps - getFailLap(tires[2])) {
+                    if (tires.length == 3 && boxlap1 > racelaps - tires[2].getFailLap()) {
                         int[] boxlaps = new int[2];
                         boxlaps[0] = boxlap0;
                         boxlaps[1] = boxlap1;
                         result.add(boxlaps);
                     } else if (tires.length > 3) {
-                        for (int boxlap2 = getStableDegLap(tires[2]) + boxlap1; boxlap2 < Math.min(
-                                getFailLap(tires[2]) + boxlap1,
-                                racelaps - getStableDegLap(tires[2])); boxlap2++) {
+                        for (int boxlap2 = tires[2].getStableDegLap() + boxlap1; boxlap2 < Math.min(
+                                tires[2].getFailLap() + boxlap1,
+                                racelaps - tires[2].getStableDegLap()); boxlap2++) {
 
-                            if (boxlap2 > racelaps - getFailLap(tires[3])) {
+                            if (boxlap2 > racelaps - tires[3].getFailLap()) {
                                 int[] boxlaps = new int[3];
                                 boxlaps[0] = boxlap0;
                                 boxlaps[1] = boxlap1;
@@ -220,30 +138,6 @@ public class Race {
             return strat;
         } else {
             return null;
-        }
-    }
-
-    public int getStableDegLap(TireType tiretype) {
-        if (tiretype == TireType.SOFT) {
-            return SoftStableDegLap;
-        } else if (tiretype == TireType.MEDIUM) {
-            return MediumStableDegLap;
-        } else if (tiretype == TireType.HARD) {
-            return HardStableDegLap;
-        } else {
-            return -1;
-        }
-    }
-
-    public int getFastDegLap(TireType tiretype) {
-        if (tiretype == TireType.SOFT) {
-            return SoftFastDegLap;
-        } else if (tiretype == TireType.MEDIUM) {
-            return MediumFastDegLap;
-        } else if (tiretype == TireType.HARD) {
-            return HardFastDegLap;
-        } else {
-            return -1;
         }
     }
 

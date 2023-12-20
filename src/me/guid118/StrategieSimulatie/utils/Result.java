@@ -8,28 +8,32 @@ public record Result(Strategy strat, double time, String RiskFactor) {
         return time;
     }
 
-    private String stringTires(TireType[] tires) {
-        StringBuilder Stringtires = new StringBuilder();
-        for (int i = 0; i < tires.length; i++) {
-            Stringtires.append(Tire.toString(tires[i]));
-            if (!(i == tires.length - 1)) {
-                Stringtires.append("-");
-            }
+    private String stringTires(Tire[] tires) {
+        StringBuilder stringTires = new StringBuilder();
+        for (Tire tire : tires) {
+            stringTires.append(tire.toString()).append("-");
         }
-        return Stringtires.toString();
+        stringTires.delete(stringTires.length() - 1, stringTires.length());
+        return stringTires.toString();
     }
 
     public String toString() {
-        TireType[] tires = strat.getTires();
+        Tire[] tires = strat.getTires();
         int[] boxlaps = strat.getBoxlaps();
-        StringBuilder savedstring = new StringBuilder();
-        savedstring.append(stringTires(tires));
-        savedstring.append("\t");
+        StringBuilder savedString = new StringBuilder();
+        savedString.append(stringTires(tires));
+        savedString.append("\t");
         for (int boxlap : boxlaps) {
-            savedstring.append(boxlap).append("\t");
+            savedString.append(boxlap);
+            if (boxlap != boxlaps[boxlaps.length -1]) {
+                savedString.append("\t");
+            }
         }
-        savedstring.append(round(time, 2)).append("\t").append(RiskFactor);
-        return savedstring.toString();
+        savedString.append("\t".repeat(Math.max(0, race.maxPitstops - boxlaps.length)));
+        savedString.append("\t");
+
+        savedString.append(round(time, 2)).append("\t").append(RiskFactor);
+        return savedString.toString();
     }
 
 
