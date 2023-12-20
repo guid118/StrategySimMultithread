@@ -23,18 +23,6 @@ public class LapTime {
         return (stint.getTire().getBaseLapTime() * laps + race.AvgFuelTime*laps + TireWear(stint));
     }
 
-    /**
-     * Calculates the fuelwear that is caused by fuel in the tank.
-     * @param stint stint for which the calculation should be performed
-     * @return fuel wear for a specific lap.
-     */
-    private static double getFuelwear(Stint stint) {
-        double fuelwear;
-        int lap = stint.getStartLap() + stint.getLaps();
-        fuelwear = 0.95 + (1 - (double) lap / race.racelaps) / 10;
-        return fuelwear;
-    }
-
 
     /**
      * Calculates the tirewear for a specific stint.
@@ -42,7 +30,6 @@ public class LapTime {
      * @return tirewear time for a specific stint. this does not include base laptime.
      */
     private static double TireWear(Stint stint){
-        //TODO use fuelwear again.
         //new newest version: https://www.desmos.com/calculator/zm6ma6utrb
         double tirewear;
         int tirelap = stint.getStartLap();
@@ -55,8 +42,6 @@ public class LapTime {
             //(((tirelap - fastdeglap)/7)+deg)^2.5 * 1 + deg
             tirewear = Math.pow(((double) (tirelap - tiretype.getFastDegLap()) / 7 + deg), 2.5) * (1+deg);
         }
-        //double fuelwear = getFuelwear(strat, tirelap);
-        //tirewear = tirewear * getFuelwear(strat, tirelap);
         return tirewear;
     }
 }
