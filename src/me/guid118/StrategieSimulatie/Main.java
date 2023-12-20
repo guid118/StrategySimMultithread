@@ -20,7 +20,6 @@ public class Main {
     public static OrderedProperties prop = new OrderedProperties();
     public static Race race;
 
-    //TODO: change degradation variables to see what could be the best strategy if some tire turns out to be more or less durable than expected.
     public static void main(String[] args) {
         if (args.length == 0) {
             Config.CreateFile();
