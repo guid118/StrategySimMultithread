@@ -27,6 +27,7 @@ public class Main {
             Scanner sc = new Scanner(System.in);
             Config.getvalues(sc.nextLine());
         } else {
+            System.out.println(args[0]);
             Config.getvalues(args[0]);
         }
         double startTime = System.currentTimeMillis();
