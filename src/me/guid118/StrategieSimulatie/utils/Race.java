@@ -6,6 +6,7 @@ public class Race {
 
     public final String name;
     public final int racelaps;
+    private final Round round;
     private Tire[] tires;
     public final double PitstopTime;
     public final int minPitstops;
@@ -19,8 +20,9 @@ public class Race {
 
 
 
-    public Race(String name, double PitstopTime, int minPitstops, int maxPitstops, double maxRaceTime, int Laps, int maxResults) {
-        this.name = name;
+    public Race(Round round, double PitstopTime, int minPitstops, int maxPitstops, double maxRaceTime, int Laps, int maxResults) {
+        this.round = round;
+        this.name = round.name();
         this.PitstopTime = PitstopTime;
         this.minPitstops = minPitstops;
         this.maxPitstops = maxPitstops;

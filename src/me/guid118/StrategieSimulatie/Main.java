@@ -21,14 +21,18 @@ public class Main {
     public static Race race;
 
     public static void main(String[] args) {
-        if (args.length == 0) {
+        try {
             Config.CreateFile();
-            System.out.println("What race would you like to simulate?");
-            Scanner sc = new Scanner(System.in);
-            Config.getvalues(sc.nextLine());
-        } else {
-            System.out.println(args[0]);
-            Config.getvalues(args[0]);
+            if (args.length == 0) {
+                System.out.println("What race would you like to simulate?");
+                Scanner sc = new Scanner(System.in);
+                Config.getvalues(sc.nextLine());
+            } else {
+                Config.getvalues(args[0]);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         double startTime = System.currentTimeMillis();
         Output.CreateFile();

@@ -3,10 +3,8 @@ package me.guid118.StrategieSimulatie.files;
 
 
 import me.guid118.StrategieSimulatie.Main;
-import me.guid118.StrategieSimulatie.utils.OrderedProperties;
-import me.guid118.StrategieSimulatie.utils.Race;
-import me.guid118.StrategieSimulatie.utils.Tire;
-import me.guid118.StrategieSimulatie.utils.TireType;
+import me.guid118.StrategieSimulatie.exceptions.UnknownRaceException;
+import me.guid118.StrategieSimulatie.utils.*;
 
 import java.io.*;
 
@@ -125,7 +123,7 @@ public class Config {
             OrderedProperties.putIfAbsent("Azerbaijan.tires.Hard.FastDegLap", "34");
             
             OrderedProperties.putIfAbsent("Azerbaijanother", "");
-            OrderedProperties.putIfAbsent("Azerbaijan.other.pitstops.Time", "23");
+            OrderedProperties.putIfAbsent("Azerbaijan.other.pitstops.time", "23");
             OrderedProperties.putIfAbsent("Azerbaijan.other.pitstops.minimum", "1");
             OrderedProperties.putIfAbsent("Azerbaijan.other.pitstops.maximum", "2");
             OrderedProperties.putIfAbsent("Azerbaijan.other.files.maxtotalTime", "6085");
@@ -155,7 +153,7 @@ public class Config {
             OrderedProperties.putIfAbsent("England.tires.Hard.FastDegLap", "29");
 
             OrderedProperties.putIfAbsent("Englandother", "");
-            OrderedProperties.putIfAbsent("England.other.pitstops.Time", "23");
+            OrderedProperties.putIfAbsent("England.other.pitstops.time", "23");
             OrderedProperties.putIfAbsent("England.other.pitstops.minimum", "1");
             OrderedProperties.putIfAbsent("England.other.pitstops.maximum", "2");
             OrderedProperties.putIfAbsent("England.other.files.maxtotalTime", "5625");
@@ -185,7 +183,7 @@ public class Config {
             OrderedProperties.putIfAbsent("Netherlands.tires.Hard.FastDegLap", "34");
 
             OrderedProperties.putIfAbsent("Netherlandsother", "");
-            OrderedProperties.putIfAbsent("Netherlands.other.pitstops.Time", "23");
+            OrderedProperties.putIfAbsent("Netherlands.other.pitstops.time", "23");
             OrderedProperties.putIfAbsent("Netherlands.other.pitstops.minimum", "1");
             OrderedProperties.putIfAbsent("Netherlands.other.pitstops.maximum", "3");
             OrderedProperties.putIfAbsent("Netherlands.other.files.maxtotalTime", "5775");
@@ -197,32 +195,29 @@ public class Config {
         }
     }
 
-    public static void getvalues(String name) {
+    public static void getvalues(String name) throws UnknownRaceException {
         int racelaps = 0;
-        if ((name.equalsIgnoreCase("Azerbaijan") || (name.equalsIgnoreCase("baku") || name.equalsIgnoreCase("Azerbeidzjan")))) {
-            name = "Azerbaijan";
+        Round round = Round.getFromString(name);
+        if (round == Round.Azerbaijan) {
             racelaps = 50;
-
-        } else if ((name.equalsIgnoreCase("England") || (name.equalsIgnoreCase("Silverstone")) || (name.equalsIgnoreCase("Engeland")) || (name.equalsIgnoreCase("Great Britain")) || (name.equalsIgnoreCase("")))) {
-            name = "England";
+        } else if (round == Round.Great_Britain) {
             racelaps = 52;
-
-        } else if ((name.equalsIgnoreCase("Netherlands") || (name.equalsIgnoreCase("Zandvoort")) || (name.equalsIgnoreCase("nederland")))) {
-            name = "Netherlands";
+        } else if (round == Round.Netherlands) {
             racelaps = 70;
         } else {
             System.out.println("Race not recognized, please enter a valid race!");
+            System.out.println(round.name());
             System.exit(0);
         }
 
         System.out.println("Loading data for race: " + name);
-        double PitstopTime = Double.parseDouble(OrderedProperties.get(name + ".other.pitstops.Time"));
+        double PitstopTime = Double.parseDouble(OrderedProperties.get(name + ".other.pitstops.time"));
         int minPitstops = Integer.parseInt(OrderedProperties.get(name + ".other.pitstops.minimum"));
         int maxPitstops = Integer.parseInt(OrderedProperties.get(name + ".other.pitstops.maximum"));
         double maxRaceTime = Double.parseDouble(OrderedProperties.get(name + ".other.files.maxtotalTime"));
         int maxResults = Integer.parseInt(OrderedProperties.get(name + ".other.files.maxResults"));
 
-        Main.race = new Race(name, PitstopTime, minPitstops, maxPitstops, maxRaceTime, racelaps, maxResults);
+        Main.race = new Race(round, PitstopTime, minPitstops, maxPitstops, maxRaceTime, racelaps, maxResults);
 
         }
 

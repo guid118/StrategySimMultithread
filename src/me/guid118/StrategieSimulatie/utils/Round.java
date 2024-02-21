@@ -32,10 +32,10 @@ public enum Round {
 
     public static Round getFromString(String str) throws UnknownRaceException {
         return switch (str.toLowerCase()) {
-            case "azerbaijan", "baku" -> Bahrain;
+            case "azerbaijan", "baku" -> Azerbaijan;
             case "great_brittain", "england", "silverstone" -> Great_Britain;
             case "netherlands", "zandvoort" -> Netherlands;
-            default -> null;
+            default -> throw new UnknownRaceException("Race: " + str + " not found!");
         };
     }
 
