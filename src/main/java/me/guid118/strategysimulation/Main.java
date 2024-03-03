@@ -1,17 +1,17 @@
-package me.guid118.StrategieSimulatie;
+package me.guid118.strategysimulation;
 
 
 import java.util.*;
 
-import me.guid118.StrategieSimulatie.files.Config;
-import me.guid118.StrategieSimulatie.files.Output;
-import me.guid118.StrategieSimulatie.utils.*;
+import me.guid118.strategysimulation.files.JSONConfig;
+import me.guid118.strategysimulation.files.Output;
+import me.guid118.strategysimulation.utils.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 
-import static me.guid118.StrategieSimulatie.files.Output.*;
+import static me.guid118.strategysimulation.files.Output.*;
 
 public class Main {
     private static final int maxthreads = Runtime.getRuntime().availableProcessors() / 4 * 3;
@@ -22,15 +22,13 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            Config.CreateFile();
             if (args.length == 0) {
                 System.out.println("What race would you like to simulate?");
                 Scanner sc = new Scanner(System.in);
-                Config.getvalues(sc.nextLine());
+                race = JSONConfig.readFromJsonFile(Round.getFromString(sc.nextLine()), "config.json");
             } else {
-                Config.getvalues(args[0]);
+                race = JSONConfig.readFromJsonFile(Round.getFromString(args[0]), "config.json");
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }

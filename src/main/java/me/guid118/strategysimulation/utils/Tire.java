@@ -1,6 +1,4 @@
-package me.guid118.StrategieSimulatie.utils;
-
-import me.guid118.StrategieSimulatie.files.Config;
+package me.guid118.strategysimulation.utils;
 
 
 public class Tire {
@@ -12,16 +10,22 @@ public class Tire {
     private final int stableDegLap;
     private final int fastDegLap;
 
-    public Tire(TireType tiretype) {
-        this.type = tiretype;
-        this.failLap = Config.getFailLap(tiretype);
-        this.baseLapTime = Config.getBaseLapTime(tiretype);
-        this.degradation = Config.getDegradation(tiretype);
-        this.stableDegLap = Config.getStableDegLap(tiretype);
-        this.fastDegLap = Config.getFastDegLap(tiretype);
+    public Tire() {
+        this.type = TireType.SOFT;
+        this.failLap = 21;
+        this.baseLapTime = 104;
+        this.degradation = 0.3;
+        this.stableDegLap = 2;
+        this.fastDegLap = 14;
+    }
 
-
-
+    public Tire(TireType type, int failLap, double baseLapTime, double degradation, int stableDegLap, int fastDegLap) {
+        this.type = type;
+        this.failLap = failLap;
+        this.baseLapTime = baseLapTime;
+        this.degradation = degradation;
+        this.stableDegLap = stableDegLap;
+        this.fastDegLap = fastDegLap;
     }
 
     public TireType getType() {

@@ -1,4 +1,4 @@
-package me.guid118.StrategieSimulatie.utils;
+package me.guid118.strategysimulation.utils;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

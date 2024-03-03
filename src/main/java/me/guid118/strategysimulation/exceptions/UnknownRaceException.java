@@ -1,4 +1,4 @@
-package me.guid118.StrategieSimulatie.exceptions;
+package me.guid118.strategysimulation.exceptions;
 
 public class UnknownRaceException extends Exception {
 

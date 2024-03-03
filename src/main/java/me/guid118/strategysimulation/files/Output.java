@@ -1,10 +1,10 @@
-package me.guid118.StrategieSimulatie.files;
+package me.guid118.strategysimulation.files;
 
 
 import java.io.*;
 import java.util.HashMap;
 
-import static me.guid118.StrategieSimulatie.Main.*;
+import static me.guid118.strategysimulation.Main.*;
 
 
 public class Output {

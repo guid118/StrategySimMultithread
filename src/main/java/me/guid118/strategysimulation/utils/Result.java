@@ -1,6 +1,7 @@
-package me.guid118.StrategieSimulatie.utils;
+package me.guid118.strategysimulation.utils;
 
-import static me.guid118.StrategieSimulatie.Main.*;
+import static me.guid118.strategysimulation.Main.race;
+import static me.guid118.strategysimulation.Main.round;
 
 public record Result(Strategy strat, double time, String RiskFactor) {
 

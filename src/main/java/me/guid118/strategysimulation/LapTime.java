@@ -1,13 +1,11 @@
-package me.guid118.StrategieSimulatie;
+package me.guid118.strategysimulation;
 
 
 
-import me.guid118.StrategieSimulatie.utils.Stint;
-import me.guid118.StrategieSimulatie.utils.Strategy;
-import me.guid118.StrategieSimulatie.utils.Tire;
-import me.guid118.StrategieSimulatie.utils.TireType;
+import me.guid118.strategysimulation.utils.Stint;
+import me.guid118.strategysimulation.utils.Tire;
 
-import static me.guid118.StrategieSimulatie.Main.race;
+import static me.guid118.strategysimulation.Main.race;
 
 public class LapTime {
     //this is the location for all the time variable calculations.

@@ -1,8 +1,6 @@
-package me.guid118.StrategieSimulatie.utils;
+package me.guid118.strategysimulation.utils;
 
-import me.guid118.StrategieSimulatie.LapTime;
-
-import static me.guid118.StrategieSimulatie.Main.race;
+import me.guid118.strategysimulation.LapTime;
 
 public class Strategy {
 

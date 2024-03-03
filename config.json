@@ -1,0 +1,97 @@
+[ {
+  "round" : "Azerbaijan",
+  "soft" : {
+    "type" : "SOFT",
+    "failLap" : 25,
+    "baseLapTime" : 107.4,
+    "degradation" : 0.16,
+    "stableDegLap" : 3,
+    "fastDegLap" : 19
+  },
+  "medium" : {
+    "type" : "MEDIUM",
+    "failLap" : 33,
+    "baseLapTime" : 107.6,
+    "degradation" : 0.1,
+    "stableDegLap" : 5,
+    "fastDegLap" : 28
+  },
+  "hard" : {
+    "type" : "HARD",
+    "failLap" : 45,
+    "baseLapTime" : 108.2,
+    "degradation" : 0.05,
+    "stableDegLap" : 10,
+    "fastDegLap" : 34
+  },
+  "racelaps" : 51,
+  "minPitstops" : 1,
+  "maxPitstops" : 3,
+  "maxRaceTime" : 6085,
+  "maxResults" : 250,
+  "pitstopTime" : 23
+}, {
+  "round" : "Great_Britain",
+  "soft" : {
+    "type" : "SOFT",
+    "failLap" : 25,
+    "baseLapTime" : 93.15,
+    "degradation" : 0.16,
+    "stableDegLap" : 3,
+    "fastDegLap" : 15
+  },
+  "medium" : {
+    "type" : "MEDIUM",
+    "failLap" : 33,
+    "baseLapTime" : 93.4,
+    "degradation" : 0.1,
+    "stableDegLap" : 5,
+    "fastDegLap" : 20
+  },
+  "hard" : {
+    "type" : "HARD",
+    "failLap" : 44,
+    "baseLapTime" : 93.7,
+    "degradation" : 0.05,
+    "stableDegLap" : 5,
+    "fastDegLap" : 29
+  },
+  "racelaps" : 52,
+  "minPitstops" : 1,
+  "maxPitstops" : 3,
+  "maxRaceTime" : 5625,
+  "maxResults" : 250,
+  "pitstopTime" : 23
+}, {
+  "round" : "Netherlands",
+  "soft" : {
+    "type" : "SOFT",
+    "failLap" : 25,
+    "baseLapTime" : 107.4,
+    "degradation" : 0.16,
+    "stableDegLap" : 3,
+    "fastDegLap" : 19
+  },
+  "medium" : {
+    "type" : "MEDIUM",
+    "failLap" : 33,
+    "baseLapTime" : 107.6,
+    "degradation" : 0.1,
+    "stableDegLap" : 5,
+    "fastDegLap" : 28
+  },
+  "hard" : {
+    "type" : "HARD",
+    "failLap" : 45,
+    "baseLapTime" : 108.2,
+    "degradation" : 0.05,
+    "stableDegLap" : 10,
+    "fastDegLap" : 34
+  },
+  "racelaps" : 72,
+  "minPitstops" : 1,
+  "maxPitstops" : 3,
+  "maxRaceTime" : 5775,
+  "maxResults" : 250,
+  "pitstopTime" : 23
+} ]
