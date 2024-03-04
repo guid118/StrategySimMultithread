@@ -1,6 +1,7 @@
 package me.guid118.strategysimulation;
 
 
+import java.io.IOException;
 import java.util.*;
 
 import me.guid118.strategysimulation.files.JSONConfig;
@@ -17,19 +18,28 @@ public class Main {
     private static final int maxthreads = Runtime.getRuntime().availableProcessors() / 4 * 3;
     //private static final int maxthreads = 100;
     private static final ThreadedSim[] threads = new ThreadedSim[maxthreads + 1];
-    public static OrderedProperties prop = new OrderedProperties();
     public static Race race;
+    public static JSONConfig config;
+
+    static {
+        try {
+            config = new JSONConfig("config.json");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static void main(String[] args) {
         try {
             if (args.length == 0) {
                 System.out.println("What race would you like to simulate?");
                 Scanner sc = new Scanner(System.in);
-                race = JSONConfig.readFromJsonFile(Round.getFromString(sc.nextLine()), "config.json");
+                race = config.readFromJsonFile(Round.getFromString(sc.nextLine()));
             } else {
-                race = JSONConfig.readFromJsonFile(Round.getFromString(args[0]), "config.json");
+                race = config.readFromJsonFile(Round.getFromString(args[0]));
             }
         } catch (Exception e) {
+            //noinspection CallToPrintStackTrace
             e.printStackTrace();
         }
         double startTime = System.currentTimeMillis();
@@ -39,8 +49,10 @@ public class Main {
         double endTime = System.currentTimeMillis();
         while (Arrays.stream(threads).distinct().count() > 1) {
             try {
+                //noinspection BusyWait
                 Thread.sleep(1);
             } catch (InterruptedException e) {
+                //noinspection CallToPrintStackTrace
                 e.printStackTrace();
             }
         }
