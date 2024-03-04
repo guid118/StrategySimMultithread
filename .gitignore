@@ -4,6 +4,7 @@
 # Log file
 *.log
 Output_*.txt
+Output_*.csv
 
 # out folder
 out/

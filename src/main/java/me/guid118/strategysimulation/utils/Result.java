@@ -38,4 +38,18 @@ public record Result(Strategy strat, double time, String RiskFactor) {
     }
 
 
+    public String[] toStringArray() {
+        Tire[] tires = strat.getTires();
+        int[] boxlaps = strat.getBoxlaps();
+        String[] result = new String[6];
+        for (int i = 0; i < boxlaps.length; i++) {
+            result[i + 1] = String.valueOf(boxlaps[i]);
+        }
+        result[0] = stringTires(tires);
+        result[4] = String.valueOf(round(time, 2));
+        result[5] = RiskFactor;
+        return result;
+    }
+
+
 }
