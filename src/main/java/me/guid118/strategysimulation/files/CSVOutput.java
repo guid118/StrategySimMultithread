@@ -35,7 +35,7 @@ public class CSVOutput {
         if (race.maxPitstops == 2) {
             Save("Order of tiretypes", "1st pitstoplap", "2nd pitstoplap", "Total time", "Riskfactor");
         } else {
-            Save("Order of tiretypes", "1st pitstoplap", "2nd pitstoplap", "Third pitstoplap", "Total time", "Riskfactor");
+            Save("Order of tiretypes", "1st pitstoplap", "2nd pitstoplap", "3rd pitstoplap", "Total time", "Riskfactor");
         }
     }
 

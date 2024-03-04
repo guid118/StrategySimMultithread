@@ -47,10 +47,11 @@ public class Main {
         generateStrategies();
         createthreads();
         double endTime = System.currentTimeMillis();
-        while (Arrays.stream(threads).distinct().count() > 1) {
+        for (ThreadedSim thread : threads) {
             try {
-                //noinspection BusyWait
-                Thread.sleep(1);
+                if (thread != null) {
+                    thread.getThread().join();
+                }
             } catch (InterruptedException e) {
                 //noinspection CallToPrintStackTrace
                 e.printStackTrace();
