@@ -1,53 +1,63 @@
-package me.guid118.StrategieSimulatie;
+package me.guid118.strategysimulation;
 
 
+import java.io.IOException;
 import java.util.*;
 
-import me.guid118.StrategieSimulatie.files.Config;
-import me.guid118.StrategieSimulatie.files.Output;
-import me.guid118.StrategieSimulatie.utils.*;
+import me.guid118.strategysimulation.files.CSVOutput;
+import me.guid118.strategysimulation.files.JSONConfig;
+import me.guid118.strategysimulation.utils.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 
-import static me.guid118.StrategieSimulatie.files.Output.*;
 
 public class Main {
     private static final int maxthreads = Runtime.getRuntime().availableProcessors() / 4 * 3;
     //private static final int maxthreads = 100;
     private static final ThreadedSim[] threads = new ThreadedSim[maxthreads + 1];
-    public static OrderedProperties prop = new OrderedProperties();
     public static Race race;
+    public static JSONConfig config;
+    public static CSVOutput csvOutput;
+
+    static {
+        try {
+            config = new JSONConfig("config.json");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static void main(String[] args) {
         try {
-            Config.CreateFile();
             if (args.length == 0) {
                 System.out.println("What race would you like to simulate?");
                 Scanner sc = new Scanner(System.in);
-                Config.getvalues(sc.nextLine());
+                race = config.readFromJsonFile(Round.getFromString(sc.nextLine()));
             } else {
-                Config.getvalues(args[0]);
+                race = config.readFromJsonFile(Round.getFromString(args[0]));
             }
-
+            csvOutput = new CSVOutput();
         } catch (Exception e) {
+            //noinspection CallToPrintStackTrace
             e.printStackTrace();
         }
         double startTime = System.currentTimeMillis();
-        Output.CreateFile();
         generateStrategies();
         createthreads();
         double endTime = System.currentTimeMillis();
-        while (Arrays.stream(threads).distinct().count() > 1) {
+        for (ThreadedSim thread : threads) {
             try {
-                Thread.sleep(1);
+                if (thread != null) {
+                    thread.getThread().join();
+                }
             } catch (InterruptedException e) {
+                //noinspection CallToPrintStackTrace
                 e.printStackTrace();
             }
         }
         saveResults();
-        Write();
         System.out.println(
                 "total execution took: " + (round((endTime - startTime) / 1000, 2) + " seconds"));
     }
@@ -93,7 +103,7 @@ public class Main {
         results.sort(Comparator.comparingDouble(Result::getTime));
         for (int i = 0; i < results.size() && i < race.maxResults; i++) {
             Result result = results.get(i);
-            Save(result.toString());
+            csvOutput.Save((Object[]) result.toStringArray());
         }
     }
 }

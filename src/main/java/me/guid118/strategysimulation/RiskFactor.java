@@ -1,15 +1,12 @@
-package me.guid118.StrategieSimulatie;
+package me.guid118.strategysimulation;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import me.guid118.StrategieSimulatie.utils.Stint;
-import me.guid118.StrategieSimulatie.utils.Strategy;
-
-import static me.guid118.StrategieSimulatie.Main.*;
+import me.guid118.strategysimulation.utils.Stint;
+import me.guid118.strategysimulation.utils.Strategy;
 
 public class RiskFactor {
 

@@ -1,6 +1,6 @@
-package me.guid118.StrategieSimulatie.utils;
+package me.guid118.strategysimulation.utils;
 
-import me.guid118.StrategieSimulatie.exceptions.UnknownRaceException;
+import me.guid118.strategysimulation.exceptions.UnknownRaceException;
 
 public enum Round {
     Bahrain,

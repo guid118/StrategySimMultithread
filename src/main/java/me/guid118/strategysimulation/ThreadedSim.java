@@ -1,11 +1,11 @@
-package me.guid118.StrategieSimulatie;
+package me.guid118.strategysimulation;
 
-import me.guid118.StrategieSimulatie.utils.Race;
-import me.guid118.StrategieSimulatie.utils.Result;
-import me.guid118.StrategieSimulatie.utils.Strategy;
+import me.guid118.strategysimulation.utils.Race;
+import me.guid118.strategysimulation.utils.Result;
+import me.guid118.strategysimulation.utils.Strategy;
 
-import static me.guid118.StrategieSimulatie.Main.*;
-import static me.guid118.StrategieSimulatie.RiskFactor.Risk;
+import static me.guid118.strategysimulation.Main.*;
+import static me.guid118.strategysimulation.RiskFactor.Risk;
 
 
 public class ThreadedSim implements Runnable {

@@ -1,4 +1,4 @@
-package me.guid118.StrategieSimulatie.utils;
+package me.guid118.strategysimulation.utils;
 
 import java.util.*;
 
@@ -6,7 +6,7 @@ public class Race {
 
     public final String name;
     public final int racelaps;
-    private final Round round;
+    public final me.guid118.strategysimulation.utils.Round round;
     private Tire[] tires;
     public final double PitstopTime;
     public final int minPitstops;
@@ -19,15 +19,15 @@ public class Race {
     public final int maxResults;
 
 
-
-    public Race(Round round, double PitstopTime, int minPitstops, int maxPitstops, double maxRaceTime, int Laps, int maxResults) {
+    public Race(Round round, Tire soft, Tire medium, Tire hard, int racelaps, int minPitstops, int maxPitstops, int maxRaceTime, int maxResults, int pitstopTime) {
+        this.name = round.toString();
+        this.racelaps = racelaps;
         this.round = round;
-        this.name = round.name();
-        this.PitstopTime = PitstopTime;
+        this.tires = new Tire[]{soft, medium, hard};
+        PitstopTime = pitstopTime;
         this.minPitstops = minPitstops;
         this.maxPitstops = maxPitstops;
         this.maxRaceTime = maxRaceTime;
-        this.racelaps = Laps;
         this.maxResults = maxResults;
     }
 
@@ -36,7 +36,6 @@ public class Race {
     }
 
     public void generateStrategies() {
-        this.tires = new Tire[]{new Tire(TireType.SOFT), new Tire(TireType.MEDIUM), new Tire(TireType.HARD)};
         for (int stops = minPitstops; stops <= maxPitstops; stops++) {
             for (Tire tire0 : tires) {
                 for (Tire tire1 : tires) {
