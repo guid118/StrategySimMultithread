@@ -13,7 +13,7 @@ public class ThreadedSim implements Runnable {
     private final int threadnumber;
     private final Race race;
 
-    ThreadedSim(int threadnumber, Race race) {
+    public ThreadedSim(int threadnumber, Race race) {
         this.threadnumber = threadnumber;
         this.race = race;
     }
@@ -26,9 +26,9 @@ public class ThreadedSim implements Runnable {
             double time = 0;
             time += strategy.run();
             time += (strategy.stints.length - 1) * race.PitstopTime;
-            addResult(new Result(strategy, time, Risk(strategy)));
+            race.addResult(new Result(strategy, time, Risk(strategy)));
         }
-        remthread(threadnumber);
+        race.remthread(threadnumber);
     }
 
     public void start () {

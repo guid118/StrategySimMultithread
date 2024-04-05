@@ -1,6 +1,11 @@
 package me.guid118.strategysimulation.utils;
 
+import me.guid118.strategysimulation.ThreadedSim;
+
 import java.util.*;
+
+import static me.guid118.strategysimulation.Main.round;
+import static me.guid118.strategysimulation.gui.GUI.csvOutput;
 
 public class Race {
 
@@ -12,11 +17,14 @@ public class Race {
     public final int minPitstops;
     public final int maxPitstops;
     public final double maxRaceTime;
-    public final double AvgFuelTime = 1.5;
+    public final double avgFuelTime = 1.5;
     public int currentstrat = 0;
     public final List<Strategy> strategies = new ArrayList<>();
-
+    public static List<Result> results = new ArrayList<>();
     public final int maxResults;
+    private static final int maxthreads = Runtime.getRuntime().availableProcessors() / 4 * 3;
+    //private static final int maxthreads = 100;
+    private static final ThreadedSim[] threads = new ThreadedSim[maxthreads + 1];
 
 
     public Race(Round round, Tire soft, Tire medium, Tire hard, int racelaps, int minPitstops, int maxPitstops, int maxRaceTime, int maxResults, int pitstopTime) {
@@ -29,6 +37,50 @@ public class Race {
         this.maxPitstops = maxPitstops;
         this.maxRaceTime = maxRaceTime;
         this.maxResults = maxResults;
+        System.out.println(name);
+    }
+
+
+    public void doSimulation() {
+        double startTime = System.currentTimeMillis();
+        generateStrategies();
+        createthreads();
+        double endTime = System.currentTimeMillis();
+        for (ThreadedSim thread : threads) {
+            try {
+                if (thread != null) {
+                    thread.getThread().join();
+                }
+            } catch (InterruptedException e) {
+                //noinspection CallToPrintStackTrace
+                e.printStackTrace();
+            }
+        }
+        saveResults();
+        System.out.println(
+                "total execution took: " + (round((endTime - startTime) / 1000, 2) + " seconds"));
+    }
+
+    private void createthreads() {
+        for (int threadnumber = 0; threadnumber < maxthreads; threadnumber++) {
+            threads[threadnumber] = new ThreadedSim(threadnumber, this);
+            threads[threadnumber].start();
+        }
+    }
+    public void remthread(int threadnumber) {
+        threads[threadnumber] = null;
+    }
+
+    public synchronized void addResult(Result result) {
+        results.add(result);
+    }
+
+    private void saveResults() {
+        results.sort(Comparator.comparingDouble(Result::getTime));
+        for (int i = 0; i < results.size() && i < this.maxResults; i++) {
+            Result result = results.get(i);
+            csvOutput.Save((Object[]) result.toStringArray());
+        }
     }
 
     public synchronized boolean hasNextStrategy() {
@@ -36,6 +88,7 @@ public class Race {
     }
 
     public void generateStrategies() {
+        double startTime = System.currentTimeMillis();
         for (int stops = minPitstops; stops <= maxPitstops; stops++) {
             for (Tire tire0 : tires) {
                 for (Tire tire1 : tires) {
@@ -54,7 +107,7 @@ public class Race {
                                                     boxlaps[1]);
                                             stints[3] = new Stint(racelaps - boxlaps[2], tire3,
                                                     boxlaps[2]);
-                                            strategies.add(new Strategy(stints));
+                                            strategies.add(new Strategy(stints, avgFuelTime));
                                         }
                                     }
                                 }
@@ -67,7 +120,7 @@ public class Race {
                                         stints[1] = new Stint(boxlaps[1] - boxlaps[0], tire1,
                                                 boxlaps[0]);
                                         stints[2] = new Stint(racelaps - boxlaps[1], tire2, boxlaps[1]);
-                                        strategies.add(new Strategy(stints));
+                                        strategies.add(new Strategy(stints, avgFuelTime));
                                     }
                                 }
                             }
@@ -79,7 +132,7 @@ public class Race {
                                 Stint[] stints = new Stint[2];
                                 stints[0] = new Stint(boxlaps[0], tire0, 0);
                                 stints[1] = new Stint(racelaps - boxlaps[0], tire1, boxlaps[0]);
-                                strategies.add(new Strategy(stints));
+                                strategies.add(new Strategy(stints, avgFuelTime));
                             }
                         }
                     }
@@ -87,6 +140,9 @@ public class Race {
             }
         }
         System.out.println("Total strategies generated: " + strategies.size());
+        double endTime = System.currentTimeMillis();
+        double generationTime = endTime - startTime;
+        System.out.println("generating strategies took: " + generationTime + " milliseconds");
     }
 
     private ArrayList<int[]> chooseboxlaps(Tire[] tires) {

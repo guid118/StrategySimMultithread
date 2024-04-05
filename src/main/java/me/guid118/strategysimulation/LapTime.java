@@ -5,7 +5,6 @@ package me.guid118.strategysimulation;
 import me.guid118.strategysimulation.utils.Stint;
 import me.guid118.strategysimulation.utils.Tire;
 
-import static me.guid118.strategysimulation.Main.race;
 
 public class LapTime {
     //this is the location for all the time variable calculations.
@@ -16,9 +15,9 @@ public class LapTime {
      * @param stint the stint for which the calculation should be performed
      * @return the laptime calculated
      */
-    public static double calculate(Stint stint) {
+    public static double calculate(Stint stint, double avgFuelTime) {
         int laps = stint.getLaps();
-        return (stint.getTire().getBaseLapTime() * laps + race.AvgFuelTime*laps + TireWear(stint));
+        return (stint.getTire().getBaseLapTime() * laps + avgFuelTime*laps + TireWear(stint));
     }
 
 

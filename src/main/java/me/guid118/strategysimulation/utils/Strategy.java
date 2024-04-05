@@ -4,6 +4,7 @@ import me.guid118.strategysimulation.LapTime;
 
 public class Strategy {
 
+    private final double avgFuelTime;
     public Stint[] stints;
     public int currentStint;
 
@@ -11,15 +12,16 @@ public class Strategy {
      * Construct a new Strategy
      * @param stints integer with the amount of stops to be made
      */
-    public Strategy(Stint[] stints) {
+    public Strategy(Stint[] stints, double avgFuelTime) {
         this.stints = stints;
+        this.avgFuelTime = avgFuelTime;
     }
 
 
     public double run() {
         double result = 0;
         for (Stint stint : stints) {
-            result += LapTime.calculate(stint);
+            result += LapTime.calculate(stint, avgFuelTime);
         }
         return result;
     }

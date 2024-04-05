@@ -8,6 +8,8 @@ module strategysimulation {
     requires java.desktop;
 
     opens me.guid118.strategysimulation.gui to javafx.fxml;
+    opens me.guid118.strategysimulation.files to com.fasterxml.jackson.databind;
+    opens me.guid118.strategysimulation.utils to com.fasterxml.jackson.databind;
     exports me.guid118.strategysimulation.gui;
     exports me.guid118.strategysimulation.gui.controllers;
     opens me.guid118.strategysimulation.gui.controllers to javafx.fxml;

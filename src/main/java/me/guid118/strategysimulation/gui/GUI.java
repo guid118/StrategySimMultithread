@@ -2,16 +2,19 @@ package me.guid118.strategysimulation.gui;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+import me.guid118.strategysimulation.files.CSVOutput;
+import me.guid118.strategysimulation.files.JSONConfig;
 import me.guid118.strategysimulation.gui.controllers.MainController;
+import me.guid118.strategysimulation.utils.Race;
+
+import java.io.IOException;
+import java.util.Arrays;
 
 public class GUI extends Application {
 
@@ -24,10 +27,24 @@ public class GUI extends Application {
     public static final Color DEFAULTCOLOR = Color.valueOf("#212C38FF");
     public static final Background DEFAULTBACKGROUND = new Background(new BackgroundFill(DEFAULTCOLOR, null, null));
 
-        @Override
+    public static CSVOutput csvOutput = null;
+    public static Race race = null;
+    public JSONConfig config;
+
+
+    @Override
         public void start(Stage stage) {
+        stage.setOnCloseRequest(event -> {
+            System.exit(0);
+        });
+
+        try {
+            config = new JSONConfig("config.json");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
             stage.setTitle("F1 Strategy Simulator");
-            MainController mainController = new MainController();
+            MainController mainController = new MainController(this);
             stage.setScene(mainController.createScene());
             stage.getScene().getWindow().setHeight(400);
             stage.show();
@@ -74,6 +91,19 @@ public class GUI extends Application {
     }
 
     /**
+     * creates a label with the given text and font size.
+     *
+     * @param text     the text to be displayed in the label
+     * @param fontSize the font size of the label
+     * @return the created label
+     */
+    public static Label createLabel(String text, int fontSize) {
+        Label label = new Label(text);
+        label.setAlignment(Pos.CENTER);
+        return label;
+    }
+
+    /**
      * creates a text field with the given text. (default colors and font size).
      *
      * @param text the text to be displayed in the text field
@@ -102,4 +132,13 @@ public class GUI extends Application {
         toggleButton.setOnAction(event -> action.run());
         return toggleButton;
     }
+
+    public static ComboBox<String> createComboBox(String[] options) {
+        ComboBox<String> comboBox = new ComboBox<>();
+        comboBox.setBackground(DEFAULTBACKGROUND);
+        comboBox.setStyle(DEFAULTLABELSTYLE);
+        Arrays.stream(options).forEach(option -> comboBox.getItems().add(option));
+        return comboBox;
+    }
+
 }

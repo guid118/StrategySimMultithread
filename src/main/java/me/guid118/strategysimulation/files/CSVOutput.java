@@ -1,5 +1,6 @@
 package me.guid118.strategysimulation.files;
 
+import me.guid118.strategysimulation.utils.Race;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
@@ -7,14 +8,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import static me.guid118.strategysimulation.Main.race;
-
 public class CSVOutput {
 
     CSVPrinter printer;
 
 
-    public CSVOutput() {
+    public CSVOutput(Race race) {
         try {
             File file = new File("Output_0.csv");
             File fileold = new File("Output_1.csv");
