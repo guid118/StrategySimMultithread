@@ -52,7 +52,11 @@ public class MainController {
         try {
             Round round = Round.getFromString(comboBox.getSelectionModel().getSelectedItem());
             System.out.println(round.toString());
+            race = null;
             GUI.race = gui.config.readFromJsonFile(round);
+            if (GUI.csvOutput != null) {
+                csvOutput.close();
+            }
             GUI.csvOutput = new CSVOutput(race);
         } catch (UnknownRaceException | IOException e) {
             throw new RuntimeException(e);

@@ -47,4 +47,12 @@ public class CSVOutput {
             e.printStackTrace();
         }
     }
+
+    public void close() {
+        try {
+            printer.close(true);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

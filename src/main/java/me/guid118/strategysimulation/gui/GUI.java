@@ -8,6 +8,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+import me.guid118.strategysimulation.UI;
 import me.guid118.strategysimulation.files.CSVOutput;
 import me.guid118.strategysimulation.files.JSONConfig;
 import me.guid118.strategysimulation.gui.controllers.MainController;
@@ -16,7 +17,7 @@ import me.guid118.strategysimulation.utils.Race;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class GUI extends Application {
+public class GUI extends Application implements UI {
 
     public static final String DEFAULTGRIDPANESTYLE = " -fx-background-radius: 0px; -fx-background-color: #212C38FF; ";
     public static final String DEFAULTLABELSTYLE = " -fx-background-radius: 0px; -fx-font-size: 15px; -fx-text-fill: #ffffff; ";

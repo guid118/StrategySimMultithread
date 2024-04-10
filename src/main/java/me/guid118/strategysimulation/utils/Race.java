@@ -20,11 +20,11 @@ public class Race {
     public final double avgFuelTime = 1.5;
     public int currentstrat = 0;
     public final List<Strategy> strategies = new ArrayList<>();
-    public static List<Result> results = new ArrayList<>();
+    public List<Result> results = new ArrayList<>();
     public final int maxResults;
-    private static final int maxthreads = Runtime.getRuntime().availableProcessors() / 4 * 3;
+    private final int maxthreads = Runtime.getRuntime().availableProcessors() / 4 * 3;
     //private static final int maxthreads = 100;
-    private static final ThreadedSim[] threads = new ThreadedSim[maxthreads + 1];
+    private final ThreadedSim[] threads = new ThreadedSim[maxthreads + 1];
 
 
     public Race(Round round, Tire soft, Tire medium, Tire hard, int racelaps, int minPitstops, int maxPitstops, int maxRaceTime, int maxResults, int pitstopTime) {
